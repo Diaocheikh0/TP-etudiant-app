@@ -1,0 +1,103 @@
+private DB db = new DB();
+    private ResultSet rs;
+    private int ok;
+    @Override
+    public int createEtudiant(Etudiant etudiant) {
+        String sql = "INSERT INTO etudiant VALUES (DEFAULT,?,?,?,?,?)";
+        try {
+            //Ouverture de la connexion
+            db.initPrepar(sql);
+            //Passage de valeur
+            db.getPstm().setString(1, etudiant.getMatricule());
+            db.getPstm().setString(2, etudiant.getNom());
+            db.getPstm().setString(3, etudiant.getPrenom());
+            db.getPstm().setDouble(4, etudiant.getMoyenne());
+
+
+            //Exécution de la requête
+            ok = db.executeMaj();
+            //fermeture de la connexion
+
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ok;
+    }
+
+    @Override
+    public List<Etudiant> getAllEtudiant() {
+        List<Etudiant> etudiants = new ArrayList<Etudiant>();
+        String sql = "SELECT * FROM etudiant ORDER BY nom ASC";
+        try {
+            db.initPrepar(sql);
+            rs = db.executeSelect();
+            while (rs.next()) {
+                Etudiant etudiant = new Etudiant();
+                etudiant.setId(rs.getInt("id"));
+                etudiant.setMatricule(rs.getString("matricule"));
+                etudiant.setNom(rs.getString("nom"));
+                etudiant.setPrenom(rs.getString("prenom"));
+                etudiant.setMoyenne(rs.getDouble("moyenne"));
+
+                etudiants.add(etudiant);
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return etudiants;
+    }
+
+    @Override
+    public Etudiant getEtudiant(int id) {
+        Etudiant etudiant = null;
+        String sql = "SELECT * FROM etudiant WHERE id = ?";
+        try {
+            db.initPrepar(sql);
+            db.getPstm().setInt(1, id);
+            rs = db.executeSelect();
+            if (rs.next()) {
+                etudiant = new Etudiant();
+                etudiant.setId(rs.getInt("id"));
+                etudiant.setMatricule(rs.getString("matricule"));
+                etudiant.setNom(rs.getString("nom"));
+                etudiant.setPrenom(rs.getString("prenom"));
+                etudiant.setMoyenne(rs.getDouble("moyenne"));
+            }
+            db.closeConnection();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return etudiant;
+    }
+
+    @Override
+    public int updateEtudiant(Etudiant etudiant) {
+        String sql = "UPDATE etudiant SET matricule = ?, nom = ?, prenom = ?, moyene = ?, classe =? WHERE id = ?";
+        try {
+            db.initPrepar(sql);
+            db.getPstm().setString(1, etudiant.getMatricule());
+            db.getPstm().setString(2, etudiant.getNom());
+            db.getPstm().setString(3, etudiant.getPrenom());
+            db.getPstm().setDouble(4, etudiant.getMoyenne());
+            db.getPstm().setInt(5, etudiant.getId());
+            ok = db.executeMaj();
+            db.closeConnection();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ok;
+    }
+
+    @Override
+    public int delete(int id) {
+        String sql = "DELETE FROM etudiant WHERE id = ?";
+        try {
+            db.initPrepar(sql);
+            db.getPstm().setInt(1, id);
+            ok = db.executeMaj();
+            db.closeConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ok;
+    }
