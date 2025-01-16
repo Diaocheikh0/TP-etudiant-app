@@ -9,7 +9,7 @@ public class DB {
 
     private static final String HOST = "localhost";
     private static final String USER = "postgres";
-    private static final String PASSWORD = "Diaoprince30";
+    private static final String PASSWORD = "DB-PASSWORD";
     private static final String DATABASE = "app_etudiant_db";
     private static final int PORT = 5433;
     private static final String URL = "jdbc:postgresql://" + HOST + ":" + PORT + "/" + DATABASE;
