@@ -12,6 +12,10 @@ public class Classe {
         this.nom = nom;
     }
 
+    public Classe(int id) {
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }

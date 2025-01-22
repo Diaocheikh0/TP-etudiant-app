@@ -20,15 +20,30 @@ public class Etudiant {
         this.prenom = prenom;
         this.moyenne = moyenne;
         this.classe = classe;
-        this.matricule = generateMatricule();
+
+        // Vérification si la classe est non nulle avant de générer le matricule
+        if (classe != null && classe.getNom() != null) {
+            this.matricule = generateMatricule(classe.getNom());
+        } else {
+            this.matricule = "ET@UNKNOWN#";
+        }
     }
+
 
     public int getId() {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getMatricule() {
         return matricule;
+    }
+
+    public void setMatricule(String matricule) {
+        this.matricule = matricule;
     }
 
     public String getNom() {
@@ -63,13 +78,26 @@ public class Etudiant {
         this.classe = classe;
     }
 
-    private String generateMatricule() {
+    public String generateMatricule(String nomClasse) {
         LocalDateTime now = LocalDateTime.now();
-
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
         String dateTime = now.format(formatter);
 
-        String mat = "ET@" + dateTime + classe + "#";
-        return mat.toUpperCase();
+        String cleanedNomClasse = nomClasse.replaceAll("\\s+", "").toUpperCase();
+
+        String matricule = "ET@" + dateTime + cleanedNomClasse + "#";
+        return matricule;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Etudiant{" +
+                "matricule='" + matricule + '\'' +
+                ", nom='" + nom + '\'' +
+                ", prenom='" + prenom + '\'' +
+                ", moyenne=" + moyenne +
+                ", classe=" + classe +
+                '}';
     }
 }
