@@ -1,7 +1,7 @@
 package entity;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Etudiant {
 
@@ -20,13 +20,6 @@ public class Etudiant {
         this.prenom = prenom;
         this.moyenne = moyenne;
         this.classe = classe;
-
-        // Vérification si la classe est non nulle avant de générer le matricule
-        if (classe != null && classe.getNom() != null) {
-            this.matricule = generateMatricule(classe.getNom());
-        } else {
-            this.matricule = "ET@UNKNOWN#";
-        }
     }
 
 
@@ -78,15 +71,11 @@ public class Etudiant {
         this.classe = classe;
     }
 
-    public String generateMatricule(String nomClasse) {
-        LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
-        String dateTime = now.format(formatter);
+    public String generateMatricule() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+        String date = sdf.format(new Date());
+        return "ET@"+date+classe.getNom()+"#";
 
-        String cleanedNomClasse = nomClasse.replaceAll("\\s+", "").toUpperCase();
-
-        String matricule = "ET@" + dateTime + cleanedNomClasse + "#";
-        return matricule;
     }
 
 

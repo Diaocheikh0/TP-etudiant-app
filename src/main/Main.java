@@ -11,55 +11,26 @@ public class Main {
 
         IEtudiant dao = new EtudiantImpl();
 
-        /*Scanner sc = new Scanner(System.in);*/
-
         /* Ajout Etudiant
+
+        IClasse daoClass = new ClasseImpl();
         Etudiant etudiant = new Etudiant();
-
-        // Saisie du nom de l'étudiant
-        System.out.print("Nom de l'étudiant : ");
-        etudiant.setNom(sc.nextLine());
-
-        // Saisie du prénom de l'étudiant
-        System.out.print("Prénom de l'étudiant : ");
-        etudiant.setPrenom(sc.nextLine());
-
-        // Saisie de la moyenne de l'étudiant
-        System.out.print("Moyenne de l'étudiant : ");
-        while (!sc.hasNextDouble()) {
-            System.out.println("Veuillez entrer une valeur numérique valide.");
-            sc.next();
-        }
-        etudiant.setMoyenne(sc.nextDouble());
-        sc.nextLine();
-
-        System.out.print("ID de la classe de l'étudiant : ");
-        while (!sc.hasNextInt()) {
-            System.out.println("Veuillez entrer un nombre entier valide.");
-            sc.next();
-        }
-        int classeId = sc.nextInt();
-        sc.nextLine();
-
-        // Création de l'objet Classe et affectation à l'étudiant
-        Classe classe = new Classe();
-        classe.setId(classeId);
-        etudiant.setClasse(classe);
-
-        // Génération automatique du matricule basé sur l'ID de la classe
-        etudiant.setMatricule(etudiant.generateMatricule(String.valueOf(classeId)));
-
+        etudiant.setNom("Diao");
+        etudiant.setPrenom("Cheikh");
+        etudiant.setMoyenne(15.5);
+        etudiant.setClasse(daoClass.get(6));
         int ok = dao.add(etudiant);
         if (ok == 1) {
-            System.out.println("Insertion success !");
-        } else {
-            System.out.println("Insertion failed !");
+            System.out.println("Ajout d'une etudiant réussie");
+        }else{
+            System.out.println("Ajout d'une etudiant non réussie");
         }
+
         Fin ajout Etudiant*/
 
         /* Afficher la Liste des étudiant
 
-        for (Etudiant etudiant : dao.list()) {
+        for (Etudiant etudiant : dao.getEtudiantsByClasse("L3_IAGE")) {
             System.out.println(etudiant);
         }
 
